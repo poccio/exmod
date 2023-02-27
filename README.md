@@ -45,8 +45,8 @@ To train on custom datasets, please refer to its documentation.
 
 ## Checkpoints
 
-A checkpoint trained on SemCor, WNE and [Fews](https://aclanthology.org/2021.eacl-main.36/) is available for 
-[download](https://drive.google.com/file/d/1KMvXUCtz1HnTkJWEzZdddtbqXXBPAkN7/view?usp=share_link). 
+A checkpoint trained on SemCor, WNE and [Fews](https://aclanthology.org/2021.eacl-main.36/) (both source and target
+language are English) is available for [download](https://drive.google.com/file/d/1KMvXUCtz1HnTkJWEzZdddtbqXXBPAkN7/view?usp=share_link). 
 
 **Important:** the model is released as is after its fine-tuning on the afore-mentioned datasets, without any further
 machinery but for beam decoding. Therefore, it may present **bias** issues and **ethical** concerns, and further 

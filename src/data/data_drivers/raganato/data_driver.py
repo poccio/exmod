@@ -1,6 +1,5 @@
 import collections
 import os
-from builtins import enumerate
 from pathlib import Path
 from typing import Iterator, List
 

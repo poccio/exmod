@@ -1,12 +1,7 @@
-import numpy as np
-import os
 from typing import List, Iterator
 
-import hydra
 from classy.data.data_drivers import ClassySample, get_data_driver, DataDriver
-from classy.utils.hydra import fix_paths
 from classy.utils.log import get_project_logger
-from omegaconf import OmegaConf
 
 from src.data.data_drivers.base import ExmodDataDriver, ExmodSample
 

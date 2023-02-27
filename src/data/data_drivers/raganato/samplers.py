@@ -1,15 +1,9 @@
-import collections
-import itertools
-import json
 from typing import Iterator, Tuple, List, Callable, Iterable
 
 import numpy as np
-import torch
 from classy.utils.log import get_project_logger
 
-from src.utils.pmi import PMI
 from src.utils.raganato import WSDInstance
-
 
 logger = get_project_logger(__name__)
 
