@@ -73,7 +73,7 @@ There are two alternatives to perform predictions with the trained checkpoints:
 
 As this repo is built on top of **classy**, we can use its functionalities to perform the prediction. First, store your
 data in the following format (**important**: the file must have *exmj* extension):
-```json
+```bash
 $ cat <path-to-input-file> | head -1 | jq
 {
   "source_language": "en",
@@ -89,7 +89,7 @@ $ cat <path-to-input-file> | head -1 | jq
 *D* is a list of lemma-definition pairs (as mentioned above, for the time being, len(D) must always be 1).
 
 Then:
-```json
+```bash
 $ classy predict file <path-to-ckpt> <path-to-input-file> -o <path-to-output-file> --prediction-params configurations/prediction-params/beam.yaml
 $ cat <path-to-output-file> | head -1 | jq
 {
@@ -118,7 +118,7 @@ the character positions where *D[0]* has been exemplified in *s*.
 
 To query via the Rest API, it's possible to either spawn the server directly or through Docker:
 * Directly:
-    ```json
+    ```bash
     $ classy serve <path-to-ckpt> --prediction-params configurations/prediction-params/beam.yaml
     $ curl -X 'POST' http://localhost:8000/ -H 'accept: application/json' -H 'Content-Type: application/json' -d '[{"source_language": "en", "D": [["dog", "a domestic animal"]], "target_language": "en"}]'
     [
