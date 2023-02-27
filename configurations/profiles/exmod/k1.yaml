@@ -1,0 +1,91 @@
+hydra:
+  verbose:
+    - classy
+    - src
+
+transformer_model: facebook/bart-large
+callbacks_monitor: 'validation_ares'
+callbacks_mode: 'max'
+
+# trainer
+training:
+  pl_trainer:
+    accumulate_grad_batches: 2
+    val_check_interval: 10_000
+    max_steps: 1_000_000
+  early_stopping_callback:
+    patience: 5
+
+# model params
+model:
+  _target_: 'src.model.seq2seq.ExModSeq2SeqBartGenerativeModule'
+  transformer_model: ${transformer_model}
+  decoding_skip_special_tokens: False
+  decoding_clean_up_tokenization_spaces: False
+  additional_special_tokens:
+    - "<s0>"
+    - "</s0>"
+    - "<s1>"
+    - "</s1>"
+    - "<s2>"
+    - "</s2>"
+    - "<s3>"
+    - "</s3>"
+    - "<s4>"
+    - "</s4>"
+  optim_conf:
+    _target_: classy.optim.factories.RAdamFactory
+    lr: 1e-5
+    weight_decay: 0.01
+    no_decay_params:
+      - bias
+      - LayerNorm.weight
+
+evaluation: ares-english
+
+callbacks:
+  - _target_: "classy.pl_callbacks.prediction.PredictionPLCallback"
+    path: null  # leave it to null to set it to validation path
+    prediction_dataset_conf: ${prediction.dataset}
+    on_result:
+      file_dumper:
+        _target_: "classy.pl_callbacks.prediction.FileDumperPredictionCallback"
+      prediction_logger:
+        _target_: "classy.pl_callbacks.prediction.WANDBLoggerPredictionCallback"
+      ares:
+        _target_: "classy.pl_callbacks.prediction.EvaluationPredictionCallback"
+        evaluation: ${evaluation}
+      copying:
+        _target_: "src.evaluation.copying.CopyingPredictionCallback"
+        log_sentences_on_wandb: True
+        evaluation:
+          _target_: "src.evaluation.copying.CopyingEvaluation"
+          sentence_transformer: "paraphrase-multilingual-mpnet-base-v2"
+          index_path: ${data.datamodule.dataset_path}
+    settings:
+      - name: "validation"
+        path: "data/ares-metric-data/en/k1/merged.exmj"
+        token_batch_size: 800
+        prediction_param_conf_path: "configurations/prediction-params/beam.yaml"
+        limit: -1
+
+data:
+  datamodule:
+    shuffle_dataset: False
+    dataset:
+      _target_: "src.data.dataset.ExModSeq2SeqBartHFGenerationDataset.from_file"
+      shuffle_D: True
+      lemma_masking: 0.2
+      add_language: False
+      add_task_description: False
+      transformer_model: ${transformer_model}
+      additional_special_tokens: "${oc.select:'model.additional_special_tokens',${oc.decode:'[]'}}"
+      truncation: False
+      min_length: 15
+      max_length: 100
+      tokens_per_batch: 800
+      max_batch_size: 4
+      section_size: 100000
+      prebatch: True
+      materialize: False
+      for_inference: False

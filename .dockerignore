@@ -1,0 +1,10 @@
+*
+!LICENSE.txt
+!README.md
+!requirements.txt
+!setup.sh
+!src
+!configurations
+!data/repo-assets
+!experiments/bart-semcor-wne-fews
+

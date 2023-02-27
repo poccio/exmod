@@ -1,1 +1,8 @@
-classy-core==0.1.1
+classy-core[serve,demo]==0.3.2
+stanza==1.4.2
+sentence-transformers==2.2.0
+nltk==3.6.5
+loguru==0.6.0
+protobuf==3.19.4  # todo debug in classy
+click==8.0.4  # todo debug in classy
+huggingface-hub==0.4.0  # todo debug in classy

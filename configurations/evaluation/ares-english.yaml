@@ -1,0 +1,6 @@
+_target_: "src.evaluation.ares.AresEvaluation"
+ares_measure:
+  _target_: "src.evaluation.ares.AresMeasure"
+  bert_transformer_model: "bert-large-cased"
+  ares_embedding_path: "data/ares/ares_bert_large.txt"
+  key_type: "sense_key"

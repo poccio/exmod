@@ -1,0 +1,2 @@
+_target_: "src.evaluation.copying.CopyingEvaluation"
+index_path: "data/training-resources/configurations/exmod/t1"
